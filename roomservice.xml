@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+
+  <!-- Device trees -->
+  <project name="ramenrolls/android_device_samsung_a14xm" path="device/samsung/a14xm" remote="github" revision="lineage-21.0" />
+
+  <!-- Vendor trees -->
+  <project name="ramenrolls/android_vendor_samsung_a14xm" path="vendor/samsung/a14xm" remote="github" revision="lineage-21.0" />
+
+  <!-- Kernel sources -->
+  <project name="ramenrolls/android_kernel_samsung_a14xm" path="kernel/samsung/a14xm" remote="github" revision="lineage-21" />
+  
+  <!-- Forks/Dep -->
+  <project name="Saikrishna1504/hardware_mediatek" path="hardware/mediatek" remote="github" revision="udc" />
+s
+</manifest>
