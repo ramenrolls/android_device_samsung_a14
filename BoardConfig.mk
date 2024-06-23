@@ -33,17 +33,24 @@ BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := \
 
 # Display
 TARGET_SCREEN_DENSITY := 450
+TARGET_USES_COLOR_METADATA := true
+TARGET_USES_DISPLAY_RENDER_INTENTS := true
+TARGET_USES_GRALLOC4 := true
+
 
 # Kernel
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
 
-BOARD_KERNEL_CMDLINE := console=tty0 console=ttyS0,921600n1 root=/dev/ram 
-BOARD_KERNEL_CMDLINE := androidboot.hardware=mt6833 vmalloc=400M swiotlb=noforce
-BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2 loop.max_part=7 
-BOARD_KERNEL_CMDLINE := firmware_class.path=/vendor/firmware androidboot.secboot_fuse=0 
-BOARD_KERNEL_CMDLINE := nokaslr mtk_printk_ctrl.disable_uart=1 
-BOARD_KERNEL_CMDLINE := androidboot.board_id=S96901GA1 androidboot.em.model=SM-A146P 
+BOARD_KERNEL_CMDLINE := console=tty0 console=ttyS0,921600n1 root=/dev/ram \
+                        androidboot.hardware=mt6833 vmalloc=400M swiotlb=noforce \
+                        bootopt=64S3,32N2,64N2 loop.max_part=7 \
+                        firmware_class.path=/vendor/firmware androidboot.secboot_fuse=0 \
+                        nokaslr mtk_printk_ctrl.disable_uart=1 \
+                        androidboot.board_id=S96901GA1 androidboot.em.model=SM-A146P \
+						androidboot.init_fatal_reboot_target=recovery \
+						androidboot.selinux=permissive \
+
 
 BOARD_KERNEL_IMAGE_NAME := Image
 TARGET_KERNEL_CONFIG := a14xm_defconfig
@@ -59,8 +66,11 @@ BOARD_RAMDISK_OFFSET := 0x11088000
 BOARD_KERNEL_TAGS_OFFSET := 0x07c08000
 BOARD_KERNEL_SECOND_OFFSET := 0x07c00000
 
-BOARD_BOOTIMG_HEADER_VERSION := 2
+TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
+TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/dtb
+BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/dtbo.img
 
+BOARD_BOOTIMG_HEADER_VERSION := 2
 BOARD_MKBOOTIMG_ARGS := --kernel_offset $(BOARD_KERNEL_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --second_offset $(BOARD_KERNEL_SECOND_OFFSET)
@@ -75,10 +85,14 @@ BOARD_FLASH_BLOCK_SIZE := 131072 # (BOARD_KERNEL_PAGESIZE * 64)
 BOARD_BOOTIMAGE_PARTITION_SIZE := 33554432
 BOARD_DTBOIMG_PARTITION_SIZE := 72672
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 41943040
+
 BOARD_SUPER_PARTITION_SIZE := 9126805504 # TODO: Fix hardcoded value
 BOARD_SUPER_PARTITION_GROUPS := samsung_dynamic_partitions
 BOARD_SAMSUNG_DYNAMIC_PARTITIONS_PARTITION_LIST :=
 BOARD_SAMSUNG_DYNAMIC_PARTITIONS_SIZE := 9122611200 # TODO: Fix hardcoded value
+
+# Set error limit to BOARD_SUPER_PARTITON_SIZE - 500MB
+BOARD_SUPER_PARTITION_ERROR_LIMIT := 8006926336
 
 # Platform
 TARGET_BOARD_PLATFORM := mt6833
@@ -103,6 +117,42 @@ BOARD_INCLUDE_RECOVERY_DTBO := true
 TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
+
+# This is the fstab file that will be included in the recovery image.  Note that
+# recovery doesn't care about the encryption settings, so it doesn't matter
+# whether we use the normal or the fips fstab here.
+TARGET_RECOVERY_FSTAB_GENRULE := gen_fstab.mt6833
+
+TARGET_RECOVERY_UI_MARGIN_HEIGHT := 165
+TARGET_RECOVERY_UI_LIB := \
+	librecovery_ui_pixel \
+	libfstab
+
+AB_OTA_UPDATER := true
+
+AB_OTA_PARTITIONS += \
+	system \
+	system_dlkm \
+	system_ext \
+	product \
+	vbmeta_system
+
+ifneq ($(PRODUCT_BUILD_BOOT_IMAGE),false)
+AB_OTA_PARTITIONS += boot
+endif
+ifneq ($(PRODUCT_BUILD_INIT_BOOT_IMAGE), false)
+AB_OTA_PARTITIONS += init_boot
+endif
+ifneq ($(PRODUCT_BUILD_VENDOR_BOOT_IMAGE),false)
+AB_OTA_PARTITIONS += vendor_boot
+AB_OTA_PARTITIONS += dtbo
+endif
+ifeq ($(PRODUCT_BUILD_VENDOR_KERNEL_BOOT_IMAGE),true)
+AB_OTA_PARTITIONS += vendor_kernel_boot
+endif
+ifneq ($(PRODUCT_BUILD_VBMETA_IMAGE),false)
+AB_OTA_PARTITIONS += vbmeta
+endif
 
 # RIL
 ENABLE_VENDOR_RIL_SERVICE := true
