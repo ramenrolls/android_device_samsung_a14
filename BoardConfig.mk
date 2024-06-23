@@ -104,8 +104,15 @@ TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 
+# RIL
+ENABLE_VENDOR_RIL_SERVICE := true
+
 # Security patch level
 VENDOR_SECURITY_PATCH := 2024-04-01
+
+# Sepolicy
+include device/mediatek/sepolicy/sepolicy.mk
+
 
 # Workaround for error copying vendor files to recovery ramdisk
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
