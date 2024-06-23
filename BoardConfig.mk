@@ -20,6 +20,8 @@ TARGET_2ND_CPU_ABI := armeabi-v7a
 TARGET_2ND_CPU_ABI2 := armeabi
 TARGET_2ND_CPU_VARIANT := generic
 TARGET_2ND_CPU_VARIANT_RUNTIME := cortex-a55
+TARGET_USES_64_BIT_BINDER := true
+
 
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := a14xm
@@ -36,12 +38,19 @@ TARGET_SCREEN_DENSITY := 450
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
 
-BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2 loop.max_part=7
+BOARD_KERNEL_CMDLINE := console=tty0 console=ttyS0,921600n1 root=/dev/ram 
+BOARD_KERNEL_CMDLINE := androidboot.hardware=mt6833 vmalloc=400M swiotlb=noforce
+BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2 loop.max_part=7 
+BOARD_KERNEL_CMDLINE := firmware_class.path=/vendor/firmware androidboot.secboot_fuse=0 
+BOARD_KERNEL_CMDLINE := nokaslr mtk_printk_ctrl.disable_uart=1 
+BOARD_KERNEL_CMDLINE := androidboot.board_id=S96901GA1 androidboot.em.model=SM-A146P 
+
 BOARD_KERNEL_IMAGE_NAME := Image
-BOARD_INCLUDE_DTB_IN_BOOTIMG := true
-BOARD_KERNEL_SEPARATED_DTBO := true
 TARGET_KERNEL_CONFIG := a14xm_defconfig
 TARGET_KERNEL_SOURCE := kernel/samsung/a14xm
+
+BOARD_INCLUDE_DTB_IN_BOOTIMG := true
+BOARD_KERNEL_SEPARATED_DTBO := true
 
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_BASE := 0x40078000
@@ -74,6 +83,9 @@ BOARD_SAMSUNG_DYNAMIC_PARTITIONS_SIZE := 9122611200 # TODO: Fix hardcoded value
 # Platform
 TARGET_BOARD_PLATFORM := mt6833
 TARGET_BOARD_PLATFORM_GPU := mali-g57
+
+BOARD_HAS_MTK_HARDWARE := true
+#BOARD_HAVE_MTK_FM := true
 
 # Properties
 TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
