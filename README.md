@@ -37,4 +37,3 @@ The Samsung Galaxy A14 5G is an entry level device released by Samsung in early 
 ### Software
 
 - **Android Version**: Shipped with Android 13, upgradeable to Android 14. OneUI 6.1
-- **Security Updates**: Expected monthly security patches.
