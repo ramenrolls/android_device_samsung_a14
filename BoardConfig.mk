@@ -37,6 +37,10 @@ TARGET_USES_COLOR_METADATA := true
 TARGET_USES_DISPLAY_RENDER_INTENTS := true
 TARGET_USES_GRALLOC4 := true
 
+BOARD_EGL_CFG := $(DEVICE_PATH)/egl.cfg
+# EGL facilitates OpenGL rendering by managing surfaces and contexts
+# It acts as bridge between render APIs and the platform's window manager
+
 
 # Kernel
 TARGET_LINUX_KERNEL_VERSION := 4.19
