@@ -46,6 +46,17 @@ DEVICE_PACKAGE_OVERLAYS += \
 # Partitions
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
+# Preopt SysUI
+PRODUCT_DEXPREOPT_SPEED_APPS += SystemUI  # For AOSP
+
+# Compile SystemUI on device with `speed`.
+PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.systemuicompilerfilter=speed
+    
+# Use 64-bit dex2oat for better dexopt time.
+PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.dex2oat64.enabled=true
+
 # Product characteristics
 PRODUCT_CHARACTERISTICS := phone
 
