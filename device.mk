@@ -10,6 +10,10 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 # Enable project quotas for emulated storage without sdcardfs
 $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 
+# Enable DeviceAsWebcam
+PRODUCT_VENDOR_PROPERTIES += \
+    ro.usb.uvc.enabled=true
+
 # API levels
 PRODUCT_SHIPPING_API_LEVEL := 33
 
@@ -17,6 +21,11 @@ PRODUCT_SHIPPING_API_LEVEL := 33
 PRODUCT_PACKAGES += \
     android.hardware.fastboot@1.1-impl-mock \
     fastbootd
+
+# Fingerprint antispoof property
+PRODUCT_PRODUCT_PROPERTIES +=\
+    persist.vendor.fingerprint.disable.fake.override=none
+
 # Graphics
 PRODUCT_PACKAGES += \
 	android.hardware.graphics.mapper@4.0-impl \
@@ -39,6 +48,17 @@ PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
 # Product characteristics
 PRODUCT_CHARACTERISTICS := phone
+
+# Multi SIM(DSDS)
+SIM_COUNT := 2
+$(call soong_config_set,sim,sim_count,$(SIM_COUNT))
+SUPPORT_MULTI_SIM := true
+# Support NR
+SUPPORT_NR := true
+# Using IRadio 
+
+# Support SecureElement HAL for HIDL
+USE_SE_HIDL := true
 
 # Power HAL
 PRODUCT_COPY_FILES += \
@@ -79,13 +99,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/etc/fstab.enableswap:$(TARGET_COPY_OUT_RAMDISK)/fstab.enableswap
 
-# Fingerprint antispoof property
-PRODUCT_PRODUCT_PROPERTIES +=\
-    persist.vendor.fingerprint.disable.fake.override=none
-
-# Enable DeviceAsWebcam
-PRODUCT_VENDOR_PROPERTIES += \
-    ro.usb.uvc.enabled=true
+# Use FUSE passthrough
+PRODUCT_PRODUCT_PROPERTIES += \
+	persist.sys.fuse.passthrough.enable=true
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
