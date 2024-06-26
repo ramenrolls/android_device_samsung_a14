@@ -7,6 +7,9 @@
 # Enable updating of APEXes
 $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 
+# Enable project quotas for emulated storage without sdcardfs
+$(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
+
 # API levels
 PRODUCT_SHIPPING_API_LEVEL := 33
 
@@ -14,6 +17,10 @@ PRODUCT_SHIPPING_API_LEVEL := 33
 PRODUCT_PACKAGES += \
     android.hardware.fastboot@1.1-impl-mock \
     fastbootd
+# Graphics
+PRODUCT_PACKAGES += \
+	android.hardware.graphics.mapper@4.0-impl \
+	android.hardware.graphics.allocator-V1-service
 
 # Health
 PRODUCT_PACKAGES += \
@@ -24,11 +31,18 @@ PRODUCT_PACKAGES += \
 # Overlays
 PRODUCT_ENFORCE_RRO_TARGETS := *
 
+DEVICE_PACKAGE_OVERLAYS += \
+    $(LOCAL_PATH)/overlay-lineage
+    
 # Partitions
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
 # Product characteristics
 PRODUCT_CHARACTERISTICS := phone
+
+# Power HAL
+PRODUCT_COPY_FILES += \
+	device/samsung/a14xm/conf/task_profiles.json:$(TARGET_COPY_OUT_VENDOR)/etc/task_profiles.json
 
 # Rootdir
 PRODUCT_PACKAGES += \
