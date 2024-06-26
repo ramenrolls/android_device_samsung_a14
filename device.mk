@@ -110,13 +110,21 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/etc/fstab.enableswap:$(TARGET_COPY_OUT_RAMDISK)/fstab.enableswap
 
-# Use FUSE passthrough
-PRODUCT_PRODUCT_PROPERTIES += \
-	persist.sys.fuse.passthrough.enable=true
-
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH)
 
+# Thermal
+PRODUCT_PACKAGES += \
+    android.hardware.thermal-service.mediatek
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/conf/thermal_info_config.json:$(TARGET_COPY_OUT_VENDOR)/etc/thermal_info_config.json
+    $(LOCAL_PATH)/conf/task_profiles.json:$(TARGET_COPY_OUT_VENDOR)/etc/task_profiles.json
+
+# Use FUSE passthrough
+PRODUCT_PRODUCT_PROPERTIES += \
+	persist.sys.fuse.passthrough.enable=true
+    
 # Inherit the proprietary files
 $(call inherit-product, vendor/samsung/a14xm/a14xm-vendor.mk)
