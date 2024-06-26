@@ -65,6 +65,14 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/etc/fstab.enableswap:$(TARGET_COPY_OUT_RAMDISK)/fstab.enableswap
 
+# Fingerprint antispoof property
+PRODUCT_PRODUCT_PROPERTIES +=\
+    persist.vendor.fingerprint.disable.fake.override=none
+
+# Enable DeviceAsWebcam
+PRODUCT_VENDOR_PROPERTIES += \
+    ro.usb.uvc.enabled=true
+
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH)
