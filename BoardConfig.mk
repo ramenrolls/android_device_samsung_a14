@@ -111,6 +111,9 @@ TARGET_BOARD_PLATFORM_GPU := mali-g57
 BOARD_HAS_MTK_HARDWARE := true
 #BOARD_HAVE_MTK_FM := true
 
+# Power
+TARGET_TAP_TO_WAKE_NODE := "/sys/touchpanel/double_tap"
+
 # Properties
 TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
 TARGET_VENDOR_PROP += $(DEVICE_PATH)/vendor.prop
@@ -172,7 +175,6 @@ VENDOR_SECURITY_PATCH := 2024-04-01
 
 # Sepolicy
 include device/mediatek/sepolicy/sepolicy.mk
-
 
 # Workaround for error copying vendor files to recovery ramdisk
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
