@@ -30,8 +30,8 @@ PRODUCT_COPY_FILES += \
 	frameworks/av/services/audiopolicy/config/bluetooth_audio_policy_configuration_7_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/bluetooth_audio_policy_configuration_7_0.xml
 
 # Bluetooth COD
-# Service Field: 0x5A -> 90
-# MINOR_CLASS: 0x0C -> 12 (Smart Phone)
+## Service Field: 0x5A -> 90
+## MINOR_CLASS: 0x0C -> 12 (Smart Phone)
 PRODUCT_PRODUCT_PROPERTIES += \
     bluetooth.device.class_of_device=90,66,12
 
@@ -114,6 +114,27 @@ USE_SE_HIDL := true
 # Power HAL
 PRODUCT_COPY_FILES += \
 	device/samsung/a14xm/conf/task_profiles.json:$(TARGET_COPY_OUT_VENDOR)/etc/task_profiles.json
+
+# RIL system props
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.telephony.default_network=26 \
+    vendor.rild.libpath=/vendor/lib64/libsec-ril.so \
+    vendor.rild.libargs=-d /dev/ttyC0
+
+# Enable DSDS soft reboot
+PRODUCT_PRODUCT_PROPERTIES += \
+	persist.radio.reboot_on_modem_change=false
+
+# Default to DSDS
+PRODUCT_PRODUCT_PROPERTIES += \
+	persist.radio.multisim.config=dsds
+
+# DSDS - Dual SIM Dual Standby
+# device has two separate radio interfaces
+# one for each SIM 
+# one SIM used for call, the other SIM is in standby mode
+# Receiving a call on the standby SIM
+# device will automatically switch to answer the call
 
 # Rootdir
 PRODUCT_PACKAGES += \
