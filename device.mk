@@ -104,8 +104,9 @@ PRODUCT_VENDOR_PROPERTIES += \
 	ro.hardware.egl = meow \
 	ro.hardware.vulkan = mali
 	ro.opengles.version=196610 \
-	ro.gfx.driver.0=com.mediatek.mt6833.gamedriver \
+	ro.gfx.driver.0=com.mediatek.mt6833.gamedriver 
     
+# Render API properties   
 PRODUCT_VENDOR_PROPERTIES += \
     ro.surface_flinger.protected_contents=true \
     ro.surface_flinger.force_hwc_copy_for_virtual_displays=true \
@@ -114,8 +115,6 @@ PRODUCT_VENDOR_PROPERTIES += \
 
 # GRAPHICS # - end
 # ####################
-
-
 
 # Health
 PRODUCT_PACKAGES += \
