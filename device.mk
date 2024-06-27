@@ -14,8 +14,10 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 PRODUCT_VENDOR_PROPERTIES += \
     ro.usb.uvc.enabled=true
 
-# API levels
-PRODUCT_SHIPPING_API_LEVEL := 33
+# API Shipping Level
+PRODUCT_SHIPPING_API_LEVEL := 33 # [Android T]
+# Product VNDK 
+PRODUCT_PRODUCT_VNDK_VERSION := current
 
 # AudioHAL Configurations
 #
@@ -28,6 +30,10 @@ PRODUCT_COPY_FILES += \
 	frameworks/av/services/audiopolicy/config/audio_policy_volumes.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_volumes.xml \
 	frameworks/av/services/audiopolicy/config/default_volume_tables.xml:$(TARGET_COPY_OUT_VENDOR)/etc/default_volume_tables.xml \
 	frameworks/av/services/audiopolicy/config/bluetooth_audio_policy_configuration_7_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/bluetooth_audio_policy_configuration_7_0.xml
+
+PRODUCT_PROPERTY_OVERRIDES += 
+    aaudio.mmap_exclusive_policy=2 \
+    aaudio.mmap_policy=2 
 
 # Bluetooth COD
 ## Service Field: 0x5A -> 90
@@ -63,10 +69,53 @@ PRODUCT_PACKAGES += \
 PRODUCT_PRODUCT_PROPERTIES +=\
     persist.vendor.fingerprint.disable.fake.override=none
 
-# Graphics
+
+# ######################
+# GRAPHICS #
+
+	TARGET_USES_VULKAN = true
+
+PRODUCT_SOONG_NAMESPACES += \
+	vendor/arm/mali/valhall
+
 PRODUCT_PACKAGES += \
 	android.hardware.graphics.mapper@4.0-impl \
-	android.hardware.graphics.allocator-V1-service
+	android.hardware.graphics.allocator-V1-service \
+
+# Mali Configuration Properties
+# b/221255664 prevents setting PROTECTED_MAX_CORE_COUNT=2
+PRODUCT_VENDOR_PROPERTIES += \
+	vendor.mali.platform.config=/vendor/etc/mali/platform.config \
+	vendor.mali.debug.config=/vendor/etc/mali/debug.config \
+      	vendor.mali.base_protected_max_core_count=1 \
+	vendor.mali.base_protected_tls_max=67108864 \
+	vendor.mali.platform_agt_frequency_khz=24576
+
+PRODUCT_COPY_FILES += \
+	frameworks/native/data/etc/android.hardware.opengles.aep.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.opengles.aep.xml \
+	frameworks/native/data/etc/android.hardware.vulkan.version-1_3.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.version.xml \
+	frameworks/native/data/etc/android.hardware.vulkan.level-1.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.level.xml \
+	frameworks/native/data/etc/android.hardware.vulkan.compute-0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.compute.xml \
+	frameworks/native/data/etc/android.software.vulkan.deqp.level-2023-03-01.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.vulkan.deqp.level.xml \
+	frameworks/native/data/etc/android.software.contextualsearch.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.contextualsearch.xml \
+	frameworks/native/data/etc/android.software.opengles.deqp.level-2023-03-01.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.opengles.deqp.level.xml
+
+PRODUCT_VENDOR_PROPERTIES += \
+	ro.hardware.egl = meow \
+	ro.hardware.vulkan = mali
+	ro.opengles.version=196610 \
+	ro.gfx.driver.0=com.mediatek.mt6833.gamedriver \
+    
+PRODUCT_VENDOR_PROPERTIES += \
+    ro.surface_flinger.protected_contents=true \
+    ro.surface_flinger.force_hwc_copy_for_virtual_displays=true \
+    ro.surface_flinger.max_frame_buffer_acquired_buffers=3 \
+    ro.surface_flinger.primary_display_orientation=ORIENTATION_0 \
+
+# GRAPHICS # - end
+# ####################
+
+
 
 # Health
 PRODUCT_PACKAGES += \
@@ -189,6 +238,16 @@ PRODUCT_COPY_FILES += \
 # Use FUSE passthrough
 PRODUCT_PRODUCT_PROPERTIES += \
 	persist.sys.fuse.passthrough.enable=true
+
+# Vendor verbose logging default property
+ifneq (,$(filter userdebug eng, $(TARGET_BUILD_VARIANT)))
+PRODUCT_PROPERTY_OVERRIDES += \
+	persist.vendor.verbose_logging_enabled=true
+else
+PRODUCT_PROPERTY_OVERRIDES += \
+	persist.vendor.verbose_logging_enabled=false
+endif
+
 
 # Inherit the proprietary files
 $(call inherit-product, vendor/samsung/a14xm/a14xm-vendor.mk)
