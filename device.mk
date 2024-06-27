@@ -73,6 +73,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_VENDOR_PROPERTIES += \
     ro.vendor.mtk_besloudness_support=1 \
 
+# Audio: must using XML format for Treblized devices
+USE_XML_AUDIO_POLICY_CONF := 1
+
 ##########################
 # Audio 
 ##########################
