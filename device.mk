@@ -31,10 +31,13 @@ PRODUCT_COPY_FILES += \
 	frameworks/av/services/audiopolicy/config/default_volume_tables.xml:$(TARGET_COPY_OUT_VENDOR)/etc/default_volume_tables.xml \
 	frameworks/av/services/audiopolicy/config/bluetooth_audio_policy_configuration_7_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/bluetooth_audio_policy_configuration_7_0.xml
 
-PRODUCT_PROPERTY_OVERRIDES += 
+PRODUCT_PROPERTY_OVERRIDES += \
     aaudio.mmap_exclusive_policy=2 \
     aaudio.mmap_policy=2 
 
+PRODUCT_VENDOR_PROPERTIES += \
+    ro.vendor.mtk_besloudness_support=1 \
+    
 # Bluetooth COD
 ## Service Field: 0x5A -> 90
 ## MINOR_CLASS: 0x0C -> 12 (Smart Phone)
@@ -69,7 +72,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PRODUCT_PROPERTIES +=\
     persist.vendor.fingerprint.disable.fake.override=none
 
-
 # ######################
 # GRAPHICS #
 # ######################
@@ -78,6 +80,9 @@ PRODUCT_PRODUCT_PROPERTIES +=\
 PRODUCT_SOONG_NAMESPACES += \
 	vendor/arm/mali/valhall
 
+## HWComposer
+PRODUCT_VENDOR_PROPERTIES += ro.hardware.hwcomposer=mtk_common
+
 PRODUCT_PACKAGES += \
 	android.hardware.graphics.mapper@4.0-impl \
 	android.hardware.graphics.allocator-V1-service \
@@ -85,9 +90,6 @@ PRODUCT_PACKAGES += \
 # Mali Configuration Properties
 # b/221255664 prevents setting PROTECTED_MAX_CORE_COUNT=2
 PRODUCT_VENDOR_PROPERTIES += \
-	vendor.mali.platform.config=/vendor/etc/mali/platform.config \
-	vendor.mali.debug.config=/vendor/etc/mali/debug.config \
-      	vendor.mali.base_protected_max_core_count=1 \
 	vendor.mali.base_protected_tls_max=67108864 \
 	vendor.mali.platform_agt_frequency_khz=24576
 
@@ -101,10 +103,11 @@ PRODUCT_COPY_FILES += \
 	frameworks/native/data/etc/android.software.opengles.deqp.level-2023-03-01.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.opengles.deqp.level.xml
 
 PRODUCT_VENDOR_PROPERTIES += \
-	ro.hardware.egl = meow \
-	ro.hardware.vulkan = mali
-	ro.opengles.version=196610 \
-	ro.gfx.driver.0=com.mediatek.mt6833.gamedriver 
+	ro.hardware.vulkan = mali \
+    ro.hardware.egl = meow \
+    ro.opengles.version=196610 \
+
+PRODUCT_VENDOR_PROPERTIES += ro.gfx.driver.0=com.mediatek.mt6833.gamedriver 
 
 # Render API properties   
 PRODUCT_VENDOR_PROPERTIES += \
@@ -112,6 +115,10 @@ PRODUCT_VENDOR_PROPERTIES += \
     ro.surface_flinger.force_hwc_copy_for_virtual_displays=true \
     ro.surface_flinger.max_frame_buffer_acquired_buffers=3 \
     ro.surface_flinger.primary_display_orientation=ORIENTATION_0 \
+
+# Vulkan Backend 
+PRODUCT_PROPERTY_OVERRIDES += \
+    debug.renderengine.backend=skiagl
 
 # GRAPHICS # - end
 # ####################
@@ -134,6 +141,18 @@ DEVICE_PACKAGE_OVERLAYS += \
 # Partitions
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
+# Proprietary Mediatek Props
+PRODUCT_VENDOR_PROPERTIES := \
+    ro.vendor.mediatek.platform=MT6833 \
+    ro.vendor.mediatek.version.branch=alps-mp-s0.mp1.tc10sp \
+    ro.vendor.mediatek.version.release=alps-mp-s0.mp1.tc10sp-wt.V1.482_P34 \
+
+##
+PRODUCT_VENDOR_PROPERTIES := \
+    ro.vendor.wlan.chrdev=wmt_chrdev_wifi \
+    ro.vendor.wlan.gen=gen4m
+
+
 # Preopt SysUI
 PRODUCT_DEXPREOPT_SPEED_APPS += SystemUI  # For AOSP
 
@@ -145,6 +164,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.dex2oat64.enabled=true
 
+# Inherit Dalvik Properties 
+$(call inherit-product, frameworks/native/build/phone-xhdpi-4096-dalvik-heap.mk)
+
 # Product characteristics
 PRODUCT_CHARACTERISTICS := phone
 
@@ -155,7 +177,6 @@ SUPPORT_MULTI_SIM := true
 # Support NR
 SUPPORT_NR := true
 # Using IRadio 
-
 # Support SecureElement HAL for HIDL
 USE_SE_HIDL := true
 
@@ -167,7 +188,12 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.telephony.default_network=26 \
     vendor.rild.libpath=/vendor/lib64/libsec-ril.so \
-    vendor.rild.libargs=-d /dev/ttyC0
+    vendor.rild.libargs=-d /dev/ttyC0 
+    
+PRODUCT_PROPERTY_OVERRIDES += ro.radio.noril=no
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.radio.noril=no
 
 # Enable DSDS soft reboot
 PRODUCT_PRODUCT_PROPERTIES += \
@@ -236,7 +262,11 @@ PRODUCT_COPY_FILES += \
 
 # Use FUSE passthrough
 PRODUCT_PRODUCT_PROPERTIES += \
-	persist.sys.fuse.passthrough.enable=true
+	persist.sys.fuse.passthrough.enable=true \
+    sys.fuse.transcode_enabled \
+    persist.sys.fuse=true \
+
+## No FUSE BPF implementation
 
 ####################################
 ## VIDEO
@@ -256,6 +286,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_COPY_FILES += \
 	$(LOCAL_PATH)/conf/media/media_codecs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs.xml \
 	$(LOCAL_PATH)/conf/media//media_codecs_performance.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_performance.xml
+
+## Netflix BSP
+PRODUCT_VENDOR_PROPERTIES += \
+    ro.netflix.bsp_rev=MTK6833-32817-1
 
 ####################################
 ## VIDEO 
