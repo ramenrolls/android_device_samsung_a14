@@ -29,6 +29,13 @@ PRODUCT_COPY_FILES += \
 	frameworks/av/services/audiopolicy/config/default_volume_tables.xml:$(TARGET_COPY_OUT_VENDOR)/etc/default_volume_tables.xml \
 	frameworks/av/services/audiopolicy/config/bluetooth_audio_policy_configuration_7_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/bluetooth_audio_policy_configuration_7_0.xml
 
+# Bluetooth COD
+# Service Field: 0x5A -> 90
+# MINOR_CLASS: 0x0C -> 12 (Smart Phone)
+PRODUCT_PRODUCT_PROPERTIES += \
+    bluetooth.device.class_of_device=90,66,12
+
+
 # Cgroup
 PRODUCT_COPY_FILES += \
     system/core/libprocessgroup/profiles/cgroups_30.json:$(TARGET_COPY_OUT_VENDOR)/etc/cgroups.json \
