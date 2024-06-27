@@ -382,15 +382,16 @@ ro.vendor.mtk_ril_mode=c6m_1rild
 ro.vendor.mtk_rild_read_imsi=1
 ro.telephony.default_cdma_sub=0
 
-ro.vendor.connsys.dedicated.log=1
+
 ro.vendor.connsys.dedicated.log.port=bt,wifi,gps,mcu
 ro.vendor.fm.platform=mt6631_6635
 ro.vendor.gps.chrdev=gps_drv
 
-ro.security.cass.feature=1
+ro.vendor.connsys.dedicated.log=1
+
+# Security
 ro.security.keystore.keytype=gak,
-ro.security.vpnpp.release=1.0
-ro.security.vpnpp.ver=2.4
+
 ro.slmk.2nd.dha_cached_max=16
 ro.slmk.2nd.swap_free_low_percentage=30
 ro.slmk.dec_EFK_enable=true
@@ -401,8 +402,6 @@ ro.slmk.dha_empty_max=24
 ro.slmk.dha_empty_min=8
 ro.slmk.psi_critical=150
 ro.slmk.swap_free_low_percentage=20
-
-ro.vendor.composer_version=2.1
 ro.vendor.epdg.support=true
 ro.vendor.have_aeev_feature=1
 ro.vendor.init.sensor.rc=init.sensor_2_0.rc
@@ -414,7 +413,6 @@ ro.vendor.mtk.bt_sap_enable=true
 ro.vendor.mtk.sensor.support=yes
 ro.vendor.mtk_aal_support=1
 ro.vendor.mtk_agps_app=1
-
 ro.vendor.mtk_config_max_dram_size=0x800000000
 ro.vendor.mtk_data_config=1
 ro.vendor.mtk_dmc_support=1
@@ -424,7 +422,6 @@ ro.vendor.mtk_emmc_support=1
 ro.vendor.mtk_f2fs_enable=1
 ro.vendor.mtk_fd_support=1
 ro.vendor.mtk_gps_support=1
-
 ro.vendor.mtk_log_hide_gps=2
 ro.vendor.mtk_lte_support=1
 ro.vendor.mtk_mapi_support=1
