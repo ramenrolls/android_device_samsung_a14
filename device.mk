@@ -23,6 +23,10 @@ PRODUCT_SHIPPING_API_LEVEL := 33 # [Android T]
 # Product VNDK 
 PRODUCT_PRODUCT_VNDK_VERSION := current
 
+##########################
+# Audio 
+##########################
+
 # AudioHAL Configurations
 #
 PRODUCT_COPY_FILES += \
@@ -41,7 +45,15 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 PRODUCT_VENDOR_PROPERTIES += \
     ro.vendor.mtk_besloudness_support=1 \
-    
+
+##########################
+# Audio 
+##########################
+
+##########################
+# Bluetooth 
+##########################
+
 # Bluetooth COD
 ## Service Field: 0x5A -> 90
 ## MINOR_CLASS: 0x0C -> 12 (Smart Phone)
@@ -62,6 +74,10 @@ PRODUCT_PRODUCT_PROPERTIES += \
     bluetooth.profile.pan.panu.enabled?=true \
     bluetooth.profile.pbap.server.enabled?=true \
     bluetooth.profile.sap.server.enabled?=true \
+
+##########################
+# Bluetooth 
+##########################
 
 # Cgroup
 PRODUCT_COPY_FILES += \
@@ -120,7 +136,7 @@ PRODUCT_VENDOR_PROPERTIES += \
     ro.surface_flinger.max_frame_buffer_acquired_buffers=3 \
     ro.surface_flinger.primary_display_orientation=ORIENTATION_0 \
 
-# Vulkan Backend 
+# Backend 
 PRODUCT_PROPERTY_OVERRIDES += \
     debug.renderengine.backend=skiagl
 
@@ -174,6 +190,10 @@ $(call inherit-product, frameworks/native/build/phone-xhdpi-4096-dalvik-heap.mk)
 # Product characteristics
 PRODUCT_CHARACTERISTICS := phone
 
+################################
+### Radio ## Telephony ## RIL
+################################
+
 # Multi SIM(DSDS)
 SIM_COUNT := 2
 $(call soong_config_set,sim,sim_count,$(SIM_COUNT))
@@ -184,9 +204,6 @@ SUPPORT_NR := true
 # Support SecureElement HAL for HIDL
 USE_SE_HIDL := true
 
-# Power HAL
-PRODUCT_COPY_FILES += \
-	device/samsung/a14xm/conf/task_profiles.json:$(TARGET_COPY_OUT_VENDOR)/etc/task_profiles.json
 
 # RIL system props
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -199,7 +216,7 @@ PRODUCT_PROPERTY_OVERRIDES += ro.radio.noril=no
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.radio.noril=no
 
-# Enable DSDS soft reboot
+# No reboot on modem change
 PRODUCT_PRODUCT_PROPERTIES += \
 	persist.radio.reboot_on_modem_change=false
 
@@ -214,7 +231,11 @@ PRODUCT_PRODUCT_PROPERTIES += \
 # Receiving a call on the standby SIM
 # device will automatically switch to answer the call
 
-# Rootdir
+################################
+### Radio ## Telephony ## RIL
+################################
+
+# Ramdisk
 PRODUCT_PACKAGES += \
     init.insmod.sh \
     install-recovery.sh \
@@ -256,13 +277,19 @@ PRODUCT_SOONG_NAMESPACES += \
     hardware/google/pixel \
     hardware/mediatek \
 
-# Thermal
+################################
+# Thermal  
+################################
 PRODUCT_PACKAGES += \
     android.hardware.thermal-service.mediatek
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/conf/thermal_info_config.json:$(TARGET_COPY_OUT_VENDOR)/etc/thermal_info_config.json \
     $(LOCAL_PATH)/conf/task_profiles.json:$(TARGET_COPY_OUT_VENDOR)/etc/task_profiles.json
+
+################################
+# Thermal  
+################################
 
 # Use FUSE passthrough
 PRODUCT_PRODUCT_PROPERTIES += \
