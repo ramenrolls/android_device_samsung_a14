@@ -9,6 +9,6 @@
   
   <!-- Forks/Dep -->
   <project name="Saikrishna1504/hardware_mediatek" path="hardware/mediatek" remote="github" revision="udc" />
-  
+  <project name="crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-6443078" path="prebuilts/clang/host/linux-x86/r383902" remote="github" revision="10.0" />
 
 </manifest>
