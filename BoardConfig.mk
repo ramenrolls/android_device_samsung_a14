@@ -37,15 +37,18 @@ TARGET_SCREEN_HEIGHT := 2408
 
 # Display
 TARGET_SCREEN_DENSITY := 450
-PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 
 TARGET_USES_COLOR_METADATA := true
 TARGET_USES_DISPLAY_RENDER_INTENTS := true
 TARGET_USES_GRALLOC4 := true
 
-BOARD_EGL_CFG := $(DEVICE_PATH)/egl.cfg
 # EGL facilitates OpenGL rendering by managing surfaces and contexts
+BOARD_EGL_CFG := $(DEVICE_PATH)/egl.cfg
 # It acts as bridge between render APIs and the platform's window manager
+
+# AAPT
+PRODUCT_AAPT_CONFIG := normal
+PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 
 # Kernel
 TARGET_LINUX_KERNEL_VERSION := 4.19

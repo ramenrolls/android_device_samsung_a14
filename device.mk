@@ -50,10 +50,6 @@ PRODUCT_PACKAGES += \
     update_engine_sideload \
     update_verifier
 
-# AAPT
-PRODUCT_AAPT_CONFIG := normal
-PRODUCT_AAPT_PREF_CONFIG := xxhdpi
-
 ##########################
 # Audio 
 ##########################
