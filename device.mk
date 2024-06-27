@@ -72,7 +72,7 @@ PRODUCT_PRODUCT_PROPERTIES +=\
 
 # ######################
 # GRAPHICS #
-
+# ######################
 	TARGET_USES_VULKAN = true
 
 PRODUCT_SOONG_NAMESPACES += \
@@ -105,7 +105,7 @@ PRODUCT_VENDOR_PROPERTIES += \
 	ro.hardware.vulkan = mali
 	ro.opengles.version=196610 \
 	ro.gfx.driver.0=com.mediatek.mt6833.gamedriver 
-    
+
 # Render API properties   
 PRODUCT_VENDOR_PROPERTIES += \
     ro.surface_flinger.protected_contents=true \
@@ -237,6 +237,29 @@ PRODUCT_COPY_FILES += \
 # Use FUSE passthrough
 PRODUCT_PRODUCT_PROPERTIES += \
 	persist.sys.fuse.passthrough.enable=true
+
+####################################
+## VIDEO
+####################################
+
+# Codec 2.0
+PRODUCT_COPY_FILES += \
+	$(LOCAL_PATH)/conf/media/media_codecs_c2.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_c2.xml \
+
+PRODUCT_PROPERTY_OVERRIDES += media.c2.dmabuf.padding=3072 
+
+# Create input surface on the framework side
+PRODUCT_PROPERTY_OVERRIDES += \
+	debug.stagefright.c2inputsurface=-1 \
+
+# OpenMAX IL
+PRODUCT_COPY_FILES += \
+	$(LOCAL_PATH)/conf/media/media_codecs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs.xml \
+	$(LOCAL_PATH)/conf/media//media_codecs_performance.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_performance.xml
+
+####################################
+## VIDEO 
+####################################
 
 # Vendor verbose logging default property
 ifneq (,$(filter userdebug eng, $(TARGET_BUILD_VARIANT)))
