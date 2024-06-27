@@ -13,6 +13,10 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 # Enable DeviceAsWebcam
 PRODUCT_VENDOR_PROPERTIES += \
     ro.usb.uvc.enabled=true
+    
+# Attempt to build Apex VM image
+$(call inherit-product, packages/modules/Virtualization/apex/product_packages.mk)
+PRODUCT_BUILD_PVMFW_IMAGE := true
 
 # API Shipping Level
 PRODUCT_SHIPPING_API_LEVEL := 33 # [Android T]
