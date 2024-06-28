@@ -143,16 +143,6 @@ TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 
-# This is the fstab file that will be included in the recovery image.  Note that
-# recovery doesn't care about the encryption settings, so it doesn't matter
-# whether we use the normal or the fips fstab here.
-TARGET_RECOVERY_FSTAB_GENRULE := gen_fstab.mt6833
-
-TARGET_RECOVERY_UI_MARGIN_HEIGHT := 165
-TARGET_RECOVERY_UI_LIB := \
-	librecovery_ui_pixel \
-	libfstab
-
 AB_OTA_UPDATER := true
 
 AB_OTA_PARTITIONS += \
