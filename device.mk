@@ -250,8 +250,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     vendor.rild.libpath=/vendor/lib64/libsec-ril.so \
     vendor.rild.libargs=-d /dev/ttyC0 
     
-PRODUCT_PROPERTY_OVERRIDES += ro.radio.noril=no
-
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.radio.noril=no
 
@@ -270,9 +268,8 @@ PRODUCT_PRODUCT_PROPERTIES += \
 # Receiving a call on the standby SIM
 # device will automatically switch to answer the call
 
-################################
-### Radio ## Telephony ## RIL
-################################
+### Radio ## Telephony ## RIL ###
+#################################
 
 # Ramdisk
 PRODUCT_PACKAGES += \
@@ -326,7 +323,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/conf/thermal_info_config.json:$(TARGET_COPY_OUT_VENDOR)/etc/thermal_info_config.json \
     $(LOCAL_PATH)/conf/task_profiles.json:$(TARGET_COPY_OUT_VENDOR)/etc/task_profiles.json
 
-################################
 # Thermal  
 ################################
 
@@ -361,7 +357,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_VENDOR_PROPERTIES += \
     ro.netflix.bsp_rev=MTK6833-32817-1
 
-####################################
 ## VIDEO 
 ####################################
 
@@ -373,7 +368,6 @@ else
 PRODUCT_PROPERTY_OVERRIDES += \
 	persist.vendor.verbose_logging_enabled=false
 endif
-
 
 # Inherit the proprietary files
 $(call inherit-product, vendor/samsung/a14xm/a14xm-vendor.mk)
