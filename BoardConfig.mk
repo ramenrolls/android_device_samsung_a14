@@ -22,7 +22,6 @@ TARGET_2ND_CPU_VARIANT := generic
 TARGET_2ND_CPU_VARIANT_RUNTIME := cortex-a55
 TARGET_USES_64_BIT_BINDER := true
 
-
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := a14xm
 TARGET_NO_BOOTLOADER := true
@@ -50,7 +49,9 @@ BOARD_EGL_CFG := $(DEVICE_PATH)/egl.cfg
 PRODUCT_AAPT_CONFIG := normal
 PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 
-# Kernel
+####################
+## Kernel
+####################
 TARGET_LINUX_KERNEL_VERSION := 4.19
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
@@ -83,6 +84,9 @@ TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
 TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/dtb
 BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/dtbo.img
 
+# Kernel Args
+#####################
+
 BOARD_BOOTIMG_HEADER_VERSION := 2
 
 # MKBootimg Args
@@ -95,7 +99,9 @@ BOARD_MKBOOTIMG_ARGS += --second_offset $(BOARD_KERNEL_SECOND_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
 
-# Partitions
+#################
+### Partitions
+#################
 BOARD_FLASH_BLOCK_SIZE := 131072 # (BOARD_KERNEL_PAGESIZE * 64)
 BOARD_BOOTIMAGE_PARTITION_SIZE := 33554432
 BOARD_DTBOIMG_PARTITION_SIZE := 72672
@@ -115,6 +121,9 @@ TARGET_COPY_OUT_VENDOR := vendor
 TARGET_COPY_OUT_PRODUCT := product
 
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
+
+# Partition - end
+#################### 
 
 # Platform
 TARGET_BOARD_PLATFORM := mt6833
