@@ -48,7 +48,7 @@ BOARD_EGL_CFG := $(DEVICE_PATH)/egl.cfg
 # It acts as bridge between render APIs and the platform's window manager
 
 # AAPT
-PRODUCT_AAPT_PREF_CONFIG := xxhdpi
+# PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 
 ####################
 ## Kernel
