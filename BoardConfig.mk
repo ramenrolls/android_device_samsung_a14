@@ -186,7 +186,7 @@ ENABLE_VENDOR_RIL_SERVICE := true
 VENDOR_SECURITY_PATCH := 2024-04-01
 
 # Sepolicy
-include device/mediatek/sepolicy/sepolicy.mk
+include device/mediatek/sepolicy_vndr/sepolicy.mk
 
 # Verified Boot
 BOARD_AVB_ENABLE := true
