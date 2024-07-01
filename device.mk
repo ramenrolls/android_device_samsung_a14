@@ -76,8 +76,8 @@ PRODUCT_VENDOR_PROPERTIES += \
 # Audio: must using XML format for Treblized devices
 USE_XML_AUDIO_POLICY_CONF := 1
 
-##########################
-# Audio 
+
+# Audio - end
 ##########################
 
 ##########################
@@ -105,8 +105,8 @@ PRODUCT_PRODUCT_PROPERTIES += \
     bluetooth.profile.pbap.server.enabled?=true \
     bluetooth.profile.sap.server.enabled?=true \
 
-##########################
-# Bluetooth 
+
+# Bluetooth - end
 ##########################
 
 # Cgroup
