@@ -24,7 +24,7 @@ PRODUCT_SHIPPING_API_LEVEL := 33 # [Android T]
 PRODUCT_PRODUCT_VNDK_VERSION := current
 
 # A/B OTA Updates
-$(call inherit-product, $(SRC_TARGET_DIR)/product/vabc_features.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/vabc_features.mk)
 
 PRODUCT_PACKAGES += \
     
